@@ -36,27 +36,6 @@ Combined in Decoder:
 | JointGT (2021) | Graph-Text Joint | None | No constraints |
 | **Ours** | **Gated Fusion** | **Learned constraints** | **Single GNN, dual output** |
 
-## Project Structure
-
-```
-├── docs/
-│   ├── Dual-Output-GNN-Architecture-Summary-EN.md   # Architecture summary (English)
-│   ├── Dual-Output-GNN-Architecture-Summary-JP.md   # Architecture summary (Japanese)
-│   ├── Dual-Output-GNN-Architecture-ChiTiet.md      # Detailed architecture (Vietnamese)
-│   ├── Dual-Output-GNN (knowledge base).md           # Comprehensive knowledge doc
-│   ├── KG-Enhanced-LLM-Complete-Research-Notes.md    # Full research notes
-│   └── Phase1_Implementation_Roadmap.md              # Implementation roadmap
-├── diagrams/
-│   ├── dual_output_gnn_full_flowchart.svg            # Full pipeline flowchart
-│   ├── dual_output_gnn_corrected.svg                 # Corrected architecture diagram
-│   ├── decoder_internal_dataflow.svg                 # Decoder data flow
-│   └── decoder_step_by_step.svg                      # Step-by-step decoding example
-├── presentations/
-│   ├── 2026s_WIP_minhtran.pptx                       # Progress presentation (Japanese)
-│   └── 2026s_WIP_minhtran_EN.pptx                    # Progress presentation (English)
-└── README.md
-```
-
 ## Technical Details
 
 - **LLM Backbone**: BART-base (140M params, hidden dim 768, frozen)
