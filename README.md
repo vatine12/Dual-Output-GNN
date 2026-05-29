@@ -6,19 +6,48 @@ A novel architecture that leverages Knowledge Graphs to reduce hallucination in 
 
 ## Architecture Overview
 
-```
-Input KG Triples → [GNN Branch] → Fusion Head → H_KG_nodes (soft guidance)
-                                 → Constraint Head → c_entity (hard constraints)
+```mermaid
+flowchart LR
+    subgraph Input
+        KG["🔗 KG Triples<br/>(h, r, t)"]
+        TXT["📝 Linearized Text<br/>'Buzz Aldrin | birthPlace | Glen Ridge'"]
+    end
 
-Input Text       → [LLM Branch (frozen)] → H_LM(t) (at each decode step)
+    subgraph GNN["GNN Branch (trainable)"]
+        RGCN["R-GCN<br/>Message Passing"]
+        FH["Fusion Head"]
+        CH["Constraint Head"]
+        RGCN --> FH
+        RGCN --> CH
+    end
 
-Combined in Decoder:
-  H_LM(t) + H_KG_nodes → Cross-Attention → H_KG(t)
-  H_LM(t) + H_KG(t)    → Gated Fusion    → H_fused(t)
-  H_fused(t)            → logits z(t)
-  c_entity              → TrieMap          → c_tok
-  z'(t) = z(t) + α·c_tok → softmax → token output
+    subgraph LLM["LLM Branch (frozen BART-base)"]
+        ENC["Encoder"]
+        DEC["Decoder"]
+        ENC --> DEC
+    end
+
+    subgraph Decoder["Decoder Integration (per step t)"]
+        CA["Cross-Attention<br/>Query: H_LM · Key/Value: H_KG"]
+        GF["Gated Fusion<br/>λ·H_LM + (1-λ)·H_KG"]
+        LOGITS["Output Logits z(t)"]
+        TRIE["TrieMap<br/>entity scores → token scores"]
+        MERGE["z'(t) = z(t) + α·c_tok"]
+        OUT(["softmax → next token"])
+
+        CA --> GF --> LOGITS --> MERGE --> OUT
+        TRIE --> MERGE
+    end
+
+    KG --> RGCN
+    TXT --> ENC
+    FH -- "H_KG_nodes<br/>(soft guidance)" --> CA
+    CH -- "c_entity<br/>(hard constraints)" --> TRIE
+    DEC -- "H_LM(t)" --> CA
+    DEC -- "H_LM(t)" --> GF
 ```
+
+The core idea: a **single GNN** processes the knowledge graph and produces **two outputs** that guide the LLM decoder in complementary ways — soft attention fusion steers the hidden states, while hard constraint decoding directly boosts entity token probabilities.
 
 ## Key Contributions
 
