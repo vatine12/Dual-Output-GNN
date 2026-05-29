@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Data (large files)
+data/
+*.pt
+*.bin
+*.ckpt
+checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Logs
+logs/
+wandb/
+*.log
+
+# QA artifacts
+For_QA/
+
+# Node (from presentation scripts)
+node_modules/
+
+# Misc
+presentation_script.md
