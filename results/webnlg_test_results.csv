@@ -1,0 +1,16 @@
+system,subset,bleu,hallucination_rate,entity_recall,corrupted_name_examples
+BART baseline,overall,47.4,0.0501,0.7853,288
+graph_fusion,overall,47.318,0.0375,0.7999,142
+graph_fusion + hard_v2,overall,47.681,0.0188,0.8517,23
+adaptive_selector_shared,overall,48.716,0.0186,0.8421,44
+adaptive_selector_shared + hard_v2,overall,48.863,0.0125,0.8649,21
+dual_head_adaptive_gnn,overall,48.682,0.0176,0.8412,43
+dual_head_adaptive_gnn + hard_v2,overall,48.817,0.0119,0.8636,21
+graph_fusion,seen,53.241,0.0353,0.8559,106
+graph_fusion + hard_v2,seen,53.773,0.0161,0.891,18
+dual_head_adaptive_gnn,seen,54.488,0.0122,0.8973,22
+dual_head_adaptive_gnn + hard_v2,seen,54.528,0.0088,0.9044,16
+graph_fusion,unseen,35.115,0.0427,0.6689,36
+graph_fusion + hard_v2,unseen,35.689,0.0254,0.7601,5
+dual_head_adaptive_gnn,unseen,36.142,0.0302,0.71,21
+dual_head_adaptive_gnn + hard_v2,unseen,36.634,0.0192,0.7682,5
